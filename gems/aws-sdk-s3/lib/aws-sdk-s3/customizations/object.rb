@@ -251,11 +251,10 @@ module Aws
         uploading_options = options.dup
         uploader = MultipartStreamUploader.new(
           client: client,
-          thread_count: uploading_options.delete(:thread_count),
-          tempfile: uploading_options.delete(:tempfile),
-          part_size: uploading_options.delete(:part_size),
+          bucket: uploading_options.delete(:bucket_name),
+          **uploading_options,
         )
-        uploader.upload(uploading_options.merge(bucket: bucket_name, key: key), &block)
+        uploader.upload(&block)
         true
       end
 
